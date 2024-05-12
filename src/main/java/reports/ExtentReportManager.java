@@ -8,10 +8,10 @@ public class ExtentReportManager {
 
     public synchronized static ExtentReports getExtentReports() {
         ExtentSparkReporter reporter = new ExtentSparkReporter("./ExtentReports/ExtentReport.html");
-        reporter.config().setReportName("Demo Extent Report | Anh Tester");
+        reporter.config().setReportName("Demo Extent Report | Vian ");
         extentReports.attachReporter(reporter);
-        extentReports.setSystemInfo("Framework Name", "Selenium Java | Anh Tester");
-        extentReports.setSystemInfo("Author", "Anh Tester");
+        extentReports.setSystemInfo("Framework Name", "Selenium Java | Vian ");
+        extentReports.setSystemInfo("Author", "Vian");
         return extentReports;
     }
 
