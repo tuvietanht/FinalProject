@@ -6,7 +6,7 @@
         <listener class-name="listeners.TestListener"></listener>
     </listeners>
 
-    <test name="Regression Parallel EDGE">
+    <test name="Regression Parallel Chrome">
         <parameter name="browser" value="chrome"></parameter>
         <classes>
             <class name="Parallel.TestCase.ProjectTest"/>
