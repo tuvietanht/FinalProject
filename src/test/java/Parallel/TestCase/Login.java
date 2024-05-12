@@ -29,6 +29,7 @@ public class Login {
         DriverManager.setDriver(driver);
     }
 
+
     public static WebDriver SetupBrowser(String browserName) {
         WebDriver driver;
         switch (browserName.toLowerCase()) {
@@ -48,7 +49,6 @@ public class Login {
         return driver;
     }
 
-
     private static WebDriver initChromeDriver() {
         WebDriver driver;
 
@@ -60,7 +60,6 @@ public class Login {
         return driver;
     }
 
-
     private static WebDriver initEdgeDriver() {
         WebDriver driver;
 
@@ -70,7 +69,6 @@ public class Login {
         driver.manage().window().maximize();
         return driver;
     }
-
 
     private static WebDriver initFirefoxDriver() {
         WebDriver driver;

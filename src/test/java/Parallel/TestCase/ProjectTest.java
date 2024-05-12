@@ -39,7 +39,7 @@ public class ProjectTest extends Login {
     @Test(priority = 2) public void LogInDashBoardPage() {dashBoardPage = signInPage.SignInDashBoardPage(PropertiesHelper.getValue("valid_username"), PropertiesHelper.getValue("valid_password"));}
 
 
-////  ProfilePage
+//  ProfilePage
     @Test(priority = 3)
     public void UpdateProfile() throws AWTException {
         dashBoardPage = signInPage.SignInDashBoardPage(PropertiesHelper.getValue("valid_username"), PropertiesHelper.getValue("valid_password"));
@@ -92,7 +92,6 @@ public class ProjectTest extends Login {
         productIn4Page.AddToCart();
     }
 
-
 //  CheckoutPage
     @Test(priority = 6)
     public void CheckoutProcess(){
@@ -139,6 +138,7 @@ public class ProjectTest extends Login {
           PropertiesHelper.setValue("user_code_order" , result);
     }
 
+//  CheckCartAfterAdd
     @Test(priority = 8)
     public void CheckAddProduct() throws Exception {
         dashBoardPage = signInPage.SignInDashBoardPage(PropertiesHelper.getValue("valid_username"), PropertiesHelper.getValue("valid_password"));
