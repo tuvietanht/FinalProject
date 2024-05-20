@@ -1,0 +1,12 @@
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+
+<suite name="Testing Final Project" verbose="1">
+
+    <test name="Test Take In4 Product">
+        <parameter name="browser" value="chrome"></parameter>
+        <classes>
+            <class name="Tests.TakeIn4ProductTest"/>
+        </classes>
+    </test>
+
+</suite>

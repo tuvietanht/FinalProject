@@ -60,9 +60,5 @@ public class TestListener implements ITestListener {
     public void onTestSkipped(ITestResult result) {
     }
 
-    @Override
-    public void onTestFailedButWithinSuccessPercentage(ITestResult result) {
-        // TODO Auto-generated method stub
 
-    }
 }

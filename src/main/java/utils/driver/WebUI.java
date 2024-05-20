@@ -1,4 +1,4 @@
-package Parallel.TestCase;
+package utils.driver;
 
 import com.aventstack.extentreports.Status;
 import org.openqa.selenium.By;
@@ -12,8 +12,6 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import org.testng.asserts.SoftAssert;
 import reports.ExtentTestManager;
-import utils.driver.DriverManager;
-import utils.driver.Log;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -27,11 +25,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class WebUI {
-
-    private final static int TIMEOUT = 10;
+    private final static int TIMEOUT = 7;
     private final static double STEP_TIME = 1;
     private final static int PAGE_LOAD_TIMEOUT = 20;
-
 
     public static void Sleep(double second) {
         try {
@@ -41,18 +37,16 @@ public class WebUI {
         }
     }
 
-
     public static void CleanAdd(By xpath, String NewText) {
         WebDriverWait wait = new WebDriverWait(DriverManager.getDriver(), Duration.ofSeconds(TIMEOUT), Duration.ofMillis(500));
         wait.until(ExpectedConditions.elementToBeClickable(xpath));
         DriverManager.getDriver().findElement(xpath).clear();
         DriverManager.getDriver().findElement(xpath).sendKeys(NewText);
 
-        Log.info("Clean add : " + xpath);
-        ExtentTestManager.logMessage(Status.PASS, "Clean add : " + xpath);
+        Log.info("Clean  : " + xpath + " And add : " + NewText);
+        ExtentTestManager.logMessage(Status.PASS, "Clean : " + xpath + " And add : " + NewText);
 
     }
-
 
     public static void ClickElementBy(By xpath) {
         WebDriverWait wait = new WebDriverWait(DriverManager.getDriver(), Duration.ofSeconds(TIMEOUT), Duration.ofMillis(500));
@@ -63,7 +57,7 @@ public class WebUI {
         ExtentTestManager.logMessage(Status.PASS, "Click Element : " + xpath);
     }
 
-    public static void ClickNSendKeyElement(By xpath , String text) {
+    public static void ClickNSendKeyElement(By xpath, String text) {
         WebDriverWait wait = new WebDriverWait(DriverManager.getDriver(), Duration.ofSeconds(TIMEOUT), Duration.ofMillis(500));
         wait.until(ExpectedConditions.visibilityOfElementLocated(xpath));
         Sleep(STEP_TIME);
@@ -73,10 +67,6 @@ public class WebUI {
         Log.info("Click Element and SendKeys : " + xpath);
         ExtentTestManager.logMessage(Status.PASS, "Click and Senkeys on : " + xpath + " on with " + text);
     }
-
-
-
-
 
     public static void SendKeysEnter(By byXpath, String text) {
         WebDriverWait wait = new WebDriverWait(DriverManager.getDriver(), Duration.ofSeconds(TIMEOUT), Duration.ofMillis(500));
@@ -89,7 +79,6 @@ public class WebUI {
         ExtentTestManager.logMessage(Status.PASS, "Set text on element and Enter : " + byXpath + " on with " + text);
     }
 
-
     public static void SendKeys(By byXpath, String text) {
         WebDriverWait wait = new WebDriverWait(DriverManager.getDriver(), Duration.ofSeconds(TIMEOUT), Duration.ofMillis(500));
         wait.until(ExpectedConditions.visibilityOfElementLocated(byXpath));
@@ -99,7 +88,6 @@ public class WebUI {
         ExtentTestManager.logMessage(Status.PASS, "Set text on element : " + byXpath + " on with " + text);
 
     }
-
 
     public static String GetText(By byXpath) {
         WebDriverWait wait = new WebDriverWait(DriverManager.getDriver(), Duration.ofSeconds(TIMEOUT), Duration.ofMillis(500));
@@ -117,27 +105,23 @@ public class WebUI {
         return DriverManager.getDriver().findElement(byXpath).getAttribute(attributeName);
     }
 
-
-
     public static void OpenURL(String url) {
         DriverManager.getDriver().get(url);
         ExtentTestManager.logMessage(Status.PASS, " Open URL :" + url);
         Log.info("Open :" + url);
     }
 
-
     public static Boolean CheckElementExist(By by) {
         List<WebElement> listElement = DriverManager.getDriver().findElements(by);
 
         if (listElement.size() > 0) {
-            System.out.println("Element " + by + " existing.");
+            Log.info("Element " + by + " existing.");
             return true;
         } else {
-            System.out.println("Element " + by + " NOT exist.");
+            Log.info("Element " + by + " Not existing.");
             return false;
         }
     }
-
 
     public static Boolean CheckElementExist(String xpath) {
         List<WebElement> listElement = DriverManager.getDriver().findElements(By.xpath(xpath));
@@ -151,7 +135,6 @@ public class WebUI {
         }
     }
 
-
     /**
      * Js
      */
@@ -162,7 +145,6 @@ public class WebUI {
         String url = js.executeScript("return document.URL;").toString();
         System.out.println(url);
     }
-
 
     public static WebElement highLightElement(By by) {
         // Tô màu border ngoài chính element chỉ định - màu đỏ (có thể đổi màu khác)
@@ -205,7 +187,6 @@ public class WebUI {
         // Nhấn Enter
         rb.keyPress(KeyEvent.VK_ENTER);
         rb.keyRelease(KeyEvent.VK_ENTER);
-
     }
 
     public static void RobotPasteXpath(String Url) throws AWTException {
@@ -230,11 +211,6 @@ public class WebUI {
         WebUI.Sleep(3);
     }
 
-
-
-
-
-
     public static void Move(By det) {
         Actions act = new Actions(DriverManager.getDriver());
         act.moveToElement(DriverManager.getDriver().findElement(det));
@@ -245,7 +221,6 @@ public class WebUI {
 //        WebElement element = DriverManager.getDriver().findElement(By.id("id_of_element"));
         js.executeScript("arguments[0].scrollIntoView(true);", DriverManager.getDriver().findElement(det));
     }
-
 
     public static void DrapDrop(By src, By det) {
         Actions act = new Actions(DriverManager.getDriver());
@@ -273,7 +248,6 @@ public class WebUI {
             return false;
         }
     }
-
 
     /**
      * Action robot
@@ -307,14 +281,45 @@ public class WebUI {
     }
 
     public static void verifyEquals(Object actual, Object expected) {
-        Log.info("Verify equals: " + actual + " and " + expected);
-        boolean check = actual.equals(expected);
-        Assert.assertEquals(actual, expected, "Fail . Not match ." + actual.toString() + " != " + expected.toString());
+        Assert.assertEquals(actual, expected, "Fail, NOT match" + actual.toString() + "not equals" + expected.toString());
+        ExtentTestManager.logMessage(Status.PASS, "Verify result" + expected + " is correct");
+        Log.info("Verify result" + expected + " is correct");
     }
 
     public static void verifyEquals(Object actual, Object expected, String message) {
-        Log.info("Verify equals: " + actual + " and " + expected);
-        Assert.assertEquals(actual, expected, message);
+        try {
+            Assert.assertEquals(actual, expected, message);
+            ExtentTestManager.logMessage(Status.PASS, "Verification successful: Result actual : " + actual + " and Result expected : " + expected + " is correct");
+            Log.info("Result actual : " + actual + " and  Result expected : " + expected + " is correct");
+        } catch (AssertionError e) {
+            Log.error("Verification failed: " + message);
+            Log.error("Result actual : " + actual + " and  Result expected : " + expected);
+            ExtentTestManager.logMessage(Status.FAIL, "Verification failed: " + message);
+            throw e;
+        }
+    }
+
+
+    public static void verifyAssertTrueIsDisplayed(By by, String message) {
+        WebDriverWait wait = new WebDriverWait(DriverManager.getDriver(), Duration.ofSeconds(TIMEOUT));
+        try {
+            wait.until(ExpectedConditions.visibilityOfElementLocated(by));
+            Assert.assertTrue(DriverManager.getDriver().findElement(by).isDisplayed(), message);
+            ExtentTestManager.logMessage(Status.PASS, "Verification successful: " + by + " is displayed");
+            Log.info("Verification successful: " + by + " is displayed");
+        } catch (Exception e) {
+            ExtentTestManager.logMessage(Status.FAIL, "Verification failed: " + by + " is not displayed. " + message);
+            Log.error("Verification failed: " + by + " is not displayed. " + message);
+            throw e;
+        }
+    }
+
+    public static void verifyAssertTrueEqual(By by, String verifyText, String message) {
+        WebDriverWait wait = new WebDriverWait(DriverManager.getDriver(), Duration.ofSeconds(TIMEOUT));
+        wait.until(ExpectedConditions.visibilityOfElementLocated(by));
+        Assert.assertTrue(DriverManager.getDriver().findElement(by).getText().trim().equals(verifyText), message);
+        Log.info("Verify " + verifyText + " is display correct on " + by.toString());
+        ExtentTestManager.logMessage(Status.PASS, "Verify " + verifyText + " is display correct on " + by.toString());
     }
 
 
@@ -337,7 +342,6 @@ public class WebUI {
         DriverManager.getDriver().switchTo().alert().sendKeys(text);
     }
 
-
     /**
      * Tab mini(popup) or new tab
      */
@@ -352,7 +356,6 @@ public class WebUI {
         DriverManager.getDriver().switchTo().window(tab.get(0));
         Thread.sleep(2000);
     }
-
 
     /**
      * Iframe
@@ -373,7 +376,6 @@ public class WebUI {
         Thread.sleep(2000);
     }
 
-
     /**
      * Assert
      */
@@ -391,7 +393,6 @@ public class WebUI {
      * Wait for Page loaded
      * Chờ đợi trang tải xong (Javascript tải xong)
      */
-
 
     //Wait for Element
     public static void WaitForElementVisible(By by) {
@@ -418,9 +419,10 @@ public class WebUI {
         try {
             WebDriverWait wait = new WebDriverWait(DriverManager.getDriver(), Duration.ofSeconds(TIMEOUT), Duration.ofMillis(500));
             wait.until(ExpectedConditions.presenceOfElementLocated(by));
+            Log.info(by.toString() + "Exist");
         } catch (Throwable error) {
-            Log.error("Element not exist. " + by.toString());
-            Assert.fail("Element not exist. " + by.toString());
+            Log.error(by.toString() + "Not exist");
+            Assert.fail(by.toString() + "Not exist");
         }
     }
 
@@ -438,6 +440,7 @@ public class WebUI {
         try {
             WebDriverWait wait = new WebDriverWait(DriverManager.getDriver(), Duration.ofSeconds(TIMEOUT), Duration.ofMillis(500));
             wait.until(ExpectedConditions.elementToBeClickable(DriverManager.getDriver().findElement(by)));
+            Log.info("Click" + by.toString());
         } catch (Throwable error) {
             Log.error("Timeout waiting for the element ready to click. " + by.toString());
             Assert.fail("Timeout waiting for the element ready to click. " + by.toString());
@@ -453,7 +456,6 @@ public class WebUI {
             Assert.fail("Timeout waiting for the element ready to click. " + by.toString());
         }
     }
-
 
     // click into network check
     public static void WaitForPageLoaded() {

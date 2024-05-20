@@ -1,4 +1,4 @@
-package Parallel.TestCase;
+package Common;
 
 import helpers.PropertiesHelper;
 import io.github.bonigarcia.wdm.WebDriverManager;
@@ -10,14 +10,15 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 import org.testng.ITestResult;
 import org.testng.annotations.*;
 import utils.driver.DriverManager;
+import utils.driver.WebUI;
 
 import java.time.Duration;
 
 
 @Listeners(TestListener.class)
-public class Login {
+public class SetupBrowser extends LinkedPage {
 
-    public Login() {
+    public SetupBrowser() {
         PropertiesHelper.loadAllFiles();
     }
 
@@ -28,7 +29,6 @@ public class Login {
         WebDriver driver = SetupBrowser(browser);
         DriverManager.setDriver(driver);
     }
-
 
     public static WebDriver SetupBrowser(String browserName) {
         WebDriver driver;
@@ -83,10 +83,10 @@ public class Login {
         return driver;
     }
 
-
     @AfterMethod
     public static void close(ITestResult result) throws InterruptedException {
         if (DriverManager.getDriver() != null) {
+            WebUI.Sleep(3);
             DriverManager.quit();
         }
     }
